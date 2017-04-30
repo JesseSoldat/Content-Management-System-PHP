@@ -1,0 +1,48 @@
+/*
+	Site Colours:
+	#1a446c - blue grey
+	#689dc1 - light blue
+	#d4e6f4 - very light blue
+	#eee439 - light tan
+	#8d0d19 - burgundy
+*/
+
+html {
+	height: 100%;
+	width: 100%;
+}
+
+body {
+	height: 100%;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background: #d4e6f4;
+	font-size: 13px;
+	line-height: 15px;
+}
+
+#header {
+	height: 70px;
+	margin: 0px;
+	padding: 0px;
+	text-align: left;
+	background: #1a446c;
+	color: #d4e6f4;
+}
+
+#header h1 {
+	padding: 1em;
+	margin: 0px;
+}
+
+#footer {
+	height: 2em;
+	margin: 0px;
+	padding: 0px;
+	text-align: center;
+	background: #1a446c;
+	color: #d4e6f4;
+}
