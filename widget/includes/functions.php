@@ -49,6 +49,7 @@ function get_subject_by_id($subject_id) {
 function find_selected_page() {
 	global $sel_subject;
 	global $sel_page;
+	print_r($_GET);
 	if(isset($_GET['subj'])) {
 		$sel_subject = get_subject_by_id($_GET['subj']);
 	} else {
@@ -76,7 +77,7 @@ function navigation($sel_subject, $sel_page, $public = false) {
 		while($subject = mysql_fetch_array($subject_set)) {
 			$output .= "<li";
 			if($subject["id"] == $sel_subject['id']) {
-				$output .= " class\"selected\"";
+				$output .= " class=\"selected\"";
 			}
 			$output .= "><a href=\"edit_subject.php?subj=" .
 				urldecode($subject["id"]) . "\">{$subject["menu_name"]}</a></li>";

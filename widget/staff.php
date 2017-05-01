@@ -3,7 +3,7 @@
 	require_once("includes/functions.php");
 	confirm_logged_in();
 	include("includes/header.php");
-	print_r($_SESSION);
+	// print_r($_SESSION);
 ?>
 
 <table id="structure">
