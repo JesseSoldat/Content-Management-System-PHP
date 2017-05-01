@@ -28,6 +28,11 @@ function confirm_query($result_set) {
 		die("Database query failed: " . mysql_error());
 	}
 }
+
+function find_selected_page() {
+	global $sel_subject;
+	global $sel_page;
+}
  
 
 
