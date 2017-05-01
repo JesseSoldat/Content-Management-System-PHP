@@ -8,9 +8,8 @@
 	}
 
 	include_once( "includes/form_functions.php" );
-
-	$username = '';
-	$password = '';
+	$username = "";
+	$password = "";
 
 	if(isset($_POST['submit'])) {
 		$errors = array();
@@ -26,21 +25,36 @@
 		$errors = array_merge($errors, check_max_field_lengths(
 			$fields_with_lengths, $_POST ));
 
-		print_r($errors);
+		// print_r($errors);
 		// var_dump($errors);
 		$username = trim(mysql_prep($_POST['username']));
 		$password = trim(mysql_prep($_POST['password']));
+		$hashed_password = sha1($password);
 
 		if(empty($errors)) {
 			$query = "SELECT id, username FROM users ";
 			$query .= "WHERE username = '{$username}' ";
+			$query .= "AND hashed_password = '{$hashed_password}' ";
+
+			$result_set = mysql_query($query);
+			confirm_query($result_set);
+
+			if(mysql_num_rows($result_set) == 1) {
+				$found_user = mysql_fetch_array($result_set);
+				print_r($found_user);
+				$_SESSION['user_id'] = $found_user['id'];
+				$_SESSION['username'] = $found_user['username'];
+				redirect_to("staff.php");
+			} else {
+				$message = "There was more than one user is that combination";
+			}
 			
-
-
 		} else {
 			$message = "Username/password combination incorrect.<br/>
 			Please make sure you typed them correctly.";
 		}
+	} else {
+		
 	}
 
 ?>

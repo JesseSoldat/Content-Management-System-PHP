@@ -17,6 +17,7 @@ if(isset($_POST['submit'])) {
 		$result = mysql_query($query, $connection);
 		if($result) {
 			$message = "The user was successfully created";
+			redirect_to('login.php');
 		} else {
 			$message = "The user could not be created";
 			$message .= "<br />" . mysql_error();
