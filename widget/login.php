@@ -4,11 +4,13 @@
 	require_once("includes/functions.php");
 
 	if(logged_in()){
-		echo "Logged In";
+		redirect_to("staff.php"); 
 	}
 
 	include_once( "includes/form_functions.php" );
 
+	$username = '';
+	$password = '';
 
 	if(isset($_POST['submit'])) {
 		$errors = array();
@@ -17,9 +19,30 @@
 
 		$errors = array_merge($errors,
 			check_required_fields($required_fields, $_POST));
+
+		$fields_with_lengths = array('username' => 30,
+			'password' => 30);
+
+		$errors = array_merge($errors, check_max_field_lengths(
+			$fields_with_lengths, $_POST ));
+
+		print_r($errors);
+		// var_dump($errors);
+		$username = trim(mysql_prep($_POST['username']));
+		$password = trim(mysql_prep($_POST['password']));
+
+		if(empty($errors)) {
+			$query = "SELECT id, username FROM users ";
+			$query .= "WHERE username = '{$username}' ";
+			
+
+
+		} else {
+			$message = "Username/password combination incorrect.<br/>
+			Please make sure you typed them correctly.";
+		}
 	}
-	$username = '';
-	$password = '';
+
 ?>
 
 <?php include("includes/header.php"); ?>
@@ -30,6 +53,11 @@
 		</td>
 		<td id="page">
 			<h2>Create New User</h2>
+			<?php 
+				if(!empty($message)) {
+					echo "<p class=\"message\">" . $message . "</p>";
+				}
+			 ?>
 				<form action="login.php" method="post">
 					<table>
 						<tr>

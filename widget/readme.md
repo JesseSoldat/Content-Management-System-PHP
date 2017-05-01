@@ -68,3 +68,10 @@ CREATE TABLE admins (
 	hashed_password VARCHAR(60) NOT NULL,
 	PRIMARY KEY (id)
 );
+
+CREATE TABLE users (
+	id INT(11) NOT NULL AUTO_INCREMENT,
+	username VARCHAR(50) NOT NULL,
+	hashed_password VARCHAR(60) NOT NULL,
+	PRIMARY KEY (id)
+);
