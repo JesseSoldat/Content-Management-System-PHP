@@ -29,6 +29,18 @@ function confirm_query($result_set) {
 	}
 }
 
+function get_pages_for_subject($subject_id, $public = true) {
+	global $connection;
+	$query = "SELECT * FROM pages WHERE subject_id = {$subject_id} ";
+	if($public) {
+		$query .= "AND visible = 1 ";
+	}
+	$query .= "ORDER BY position ASC";
+	$page_set = mysql_query($query, $connection);
+	confirm_query($page_set);
+	return $page_set;
+}
+
 function get_subject_by_id($subject_id) {
 	global $connection;
 	$query = "SELECT * ";
@@ -82,9 +94,17 @@ function navigation($sel_subject, $sel_page, $public = false) {
 			$output .= "><a href=\"edit_subject.php?subj=" .
 				urldecode($subject["id"]) . "\">{$subject["menu_name"]}</a></li>";
 
+			$page_set = get_pages_for_subject($subject["id"], $public);
 
-
-
+			$output .= "<ul class=\"pages\">";
+			while($page = mysql_fetch_array($page_set)) {
+				$output .= "<li";
+				if($page["id"] == $sel_page["id"]) {
+					$output .= " class=\"selected\">";
+				}
+				$output .= "><a href=\"content.php?page=" . urldecode($page["id"]) . "\">{$page["menu_name"]}</a></li>";
+			}
+			$output .= "</ul>";
 		}
 		$output .= "</ul>";
 		return $output;
