@@ -29,9 +29,31 @@ function confirm_query($result_set) {
 	}
 }
 
+function get_subject_by_id($subject_id) {
+	global $connection;
+	$query = "SELECT * ";
+	$query .= "FROM subjects ";
+	$query .= "WHERE id = " . $subject_id;
+	$query .= " LIMIT 1";
+
+	$result_set = mysql_query($query, $connection);
+	confirm_query($result_set);
+
+	if($subject = mysql_fetch_array($result_set)) {
+		return $subject;
+	} else {
+		return NULL;
+	}
+}
+
 function find_selected_page() {
 	global $sel_subject;
 	global $sel_page;
+	if(isset($_GET['subj'])) {
+		$sel_subject = get_subject_by_id($_GET['subj']);
+	} else {
+		$sel_subject = NULL;
+	}
 }
 
 function get_all_subjects($public = true) {
