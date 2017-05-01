@@ -4,6 +4,7 @@
 <?php include("includes/header.php"); ?>
 <table id="structure">
 	<td id="navigation">
+		<?php echo navigation($sel_subject, $sel_page); ?>
 		<br/>
 		<a href="new_subject.php">+ Add a new subject</a>
 	</td>
