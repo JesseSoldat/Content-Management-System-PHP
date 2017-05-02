@@ -11,9 +11,24 @@
 <p>
 	Position:
 	<select name="position">
-		<option value="1">1</option>
-		<option value="2">2</option>
-		<option value="3">3</option>
+		<?php
+			if(!$new_page) {
+				//Edit Page
+				$page_set = get_pages_for_subject($sel_page['subject_id']);
+				$page_count = mysql_num_rows($page_set);
+			} else {
+				//New Page
+				$page_set = get_pages_for_subject($sel_subject['id']);
+				$page_count = mysql_num_rows($page_set) + 1 ;
+			}
+			for($count = 1; $count <= $page_count; $count++) {
+				echo "<option value\"{$count}\"";
+				if($sel_page['position'] == $count) {
+					echo " selected";
+				}
+				echo ">{$count}</option>";
+			}
+			?>
 	</select>
 </p>
 <p>

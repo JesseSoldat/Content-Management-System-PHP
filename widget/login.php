@@ -66,7 +66,7 @@
 			<br/>
 		</td>
 		<td id="page">
-			<h2>Create New User</h2>
+			<h2>Login User</h2>
 			<?php 
 				if(!empty($message)) {
 					echo "<p class=\"message\">" . $message . "</p>";

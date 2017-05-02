@@ -58,14 +58,41 @@ function get_subject_by_id($subject_id) {
 	}
 }
 
+function get_page_by_id($page_id) {
+	global $connection;
+	$query = "SELECT * FROM pages WHERE id = " . $page_id;
+	$query .= " LIMIT 1";
+	$result_set = mysql_query($query, $connection);
+	confirm_query($result_set);
+	if($page = mysql_fetch_array($result_set)) {
+		return $page;
+	} else {
+		return NULL;
+	}
+}
+
+function get_default_page($subject_id) {
+	$page_set = get_pages_for_subject($subject_id, true);
+	if($first_page = mysql_fetch_array($page_set)) {
+		return $first_page;
+	} else {
+		return NULL;
+	}
+}
+
 function find_selected_page() {
 	global $sel_subject;
 	global $sel_page;
-	print_r($_GET);
+	// print_r($_GET);
 	if(isset($_GET['subj'])) {
 		$sel_subject = get_subject_by_id($_GET['subj']);
+		$sel_page = get_default_page($sel_subject['id']);
+	} elseif(isset($_GET['page'])) {
+		$sel_subject = NULL;
+		$sel_page = get_page_by_id($_GET['page']);
 	} else {
 		$sel_subject = NULL;
+		$sel_page = NULL;
 	}
 }
 
@@ -100,7 +127,7 @@ function navigation($sel_subject, $sel_page, $public = false) {
 			while($page = mysql_fetch_array($page_set)) {
 				$output .= "<li";
 				if($page["id"] == $sel_page["id"]) {
-					$output .= " class=\"selected\">";
+					$output .= " class=\"selected\"";
 				}
 				$output .= "><a href=\"content.php?page=" . urldecode($page["id"]) . "\">{$page["menu_name"]}</a></li>";
 			}

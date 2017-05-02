@@ -20,7 +20,7 @@ if(isset($_POST['submit'])) {
 			<?php echo navigation($sel_subject, $sel_page); ?>
 		</td>
 		<td id="page">
-			<h2>Edit Subject: </h2>
+			<h2>Edit Subject:</h2>
 
 
 			<form>
